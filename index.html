@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="Lucas Kinderknech" />
+    <title>Ruleta Scrum</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="stars" class="background"></div>
+
+    <main id="view">
+      <section class="panel">
+        <header class="panel__header">
+          <h1>Ruleta Scrum</h1>
+          <p>Backend Team by Scanntech</p>
+          <p class="panel__time">Hora actual: <span id="clock-display">--:--</span></p>
+        </header>
+
+        <div class="board">
+          <div class="board__wheel">
+            <div class="wheel__overlay">
+              <div id="clock" class="time"></div>
+              <div id="chrono" class="time time--chrono"></div>
+            </div>
+            <canvas id="wheel" width="520" height="520"></canvas>
+            <button id="spin" class="btn btn--spin" type="button" aria-label="Girar ruleta">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path
+                  d="M12 6.5l4 4h-3v7h-2v-7H8l4-4m0-6.5C6.5 0 2 4.5 2 10s4.5 10 10 10 10-4.5 10-10S17.5 0 12 0zm0 18c-4.4 0-8-3.6-8-8s3.6-8 8-8 8 3.6 8 8-3.6 8-8 8z"
+                ></path>
+              </svg>
+            </button>
+          </div>
+
+          <div class="board__names">
+            <div id="chrono-card" class="chrono-card" hidden>
+              <span class="chrono-card__label">Tiempo actual</span>
+              <span id="chrono-card-value" class="chrono-card__value">00:00</span>
+            </div>
+            <label for="names" class="label">Participantes</label>
+            <div class="field">
+              <input
+                id="names"
+                type="text"
+                placeholder="Ingresa nombres separados por coma"
+                autocomplete="off"
+              />
+              <button id="add" class="btn" type="button" aria-label="Agregar nombres">Agregar</button>
+            </div>
+            <div id="names-list" class="names"></div>
+            <button id="clear" class="btn btn--danger" type="button">Limpiar</button>
+            <p id="alert" class="alert" hidden></p>
+
+          <div id="summary" class="summary" hidden>
+            <h2>Resumen de tiempos</h2>
+            <table class="summary__table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Nombre</th>
+                  <th>Tiempo</th>
+                </tr>
+              </thead>
+              <tbody id="summary-body"></tbody>
+            </table>
+          </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <audio id="audio-tick" src="https://cdn.pixabay.com/download/audio/2022/01/07/audio_5aa22f146f.mp3?filename=rclick-13693.mp3" preload="auto"></audio>
+    <audio id="audio-spin" src="https://cdn.pixabay.com/download/audio/2021/08/04/audio_0625c1539c.mp3?filename=success-1-6297.mp3" preload="auto"></audio>
+    <audio id="audio-win" src="https://cdn.pixabay.com/download/audio/2021/08/09/audio_2e957962fc.mp3?filename=cartoon_wink_magic_sparkle-6896.mp3" preload="auto"></audio>
+    <audio id="audio-last" src="https://cdn.pixabay.com/download/audio/2022/01/09/audio_a7ef00f0ca.mp3?filename=final-of-win-super-mario-bros-zelda-106180.mp3" preload="auto"></audio>
+
+    <script src="main.js" type="module"></script>
+  </body>
+</html>
+

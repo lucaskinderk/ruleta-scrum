@@ -1,0 +1,19 @@
+{
+  "name": "ruleta-scrum",
+  "version": "1.0.0",
+  "description": "Aplicación web para gestionar turnos de habla en reuniones Scrum",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve . -p 3000",
+    "dev": "npx serve . -p 3000"
+  },
+  "keywords": [
+    "scrum",
+    "ruleta",
+    "meeting",
+    "timer"
+  ],
+  "author": "Lucas Kinderknech",
+  "license": "MIT"
+}
+

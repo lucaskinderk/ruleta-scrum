@@ -1,0 +1,39 @@
+═══════════════════════════════════════════════════════════════
+  RULETA SCRUM - INSTRUCCIONES RÁPIDAS
+═══════════════════════════════════════════════════════════════
+
+
+🚀 INICIAR LA APLICACIÓN:
+
+WINDOWS:
+  - Doble clic en "iniciar.bat"
+  - Se abrirá automáticamente en tu navegador
+
+MAC/LINUX:
+  - Abre una terminal en la carpeta
+  - Ejecuta: chmod +x iniciar.sh
+  - Ejecuta: ./iniciar.sh
+
+SIN SERVIDOR (método simple):
+  - Doble clic en "index.html"
+  - Se abrirá en tu navegador (algunas funciones pueden no funcionar)
+
+═══════════════════════════════════════════════════════════════
+
+
+⚠️  REQUISITOS:
+
+- Navegador web moderno (Chrome, Firefox, Edge, Safari)
+- Conexión a internet (para los sonidos)
+- Python (para el servidor local) - OPCIONAL
+
+═══════════════════════════════════════════════════════════════
+
+💡 CONSEJOS:
+
+- Si no tienes Python, puedes usar Node.js: npx serve .
+- Para uso offline, descarga los archivos de audio y modifica index.html
+- La aplicación funciona mejor con un servidor local
+
+═══════════════════════════════════════════════════════════════
+
