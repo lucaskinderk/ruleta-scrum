@@ -14,7 +14,7 @@
       <section class="panel">
         <header class="panel__header">
           <h1>Ruleta Scrum</h1>
-          <p>Backend Team by Scanntech</p>
+        <!--  <p>Backend Team by Scanntech</p> -->
           <p class="panel__time">Hora actual: <span id="clock-display">--:--</span></p>
           <div id="weather-container" class="weather-container"></div>
         </header>
@@ -86,6 +86,19 @@
     <audio id="audio-win" src="https://cdn.pixabay.com/download/audio/2021/08/09/audio_2e957962fc.mp3?filename=cartoon_wink_magic_sparkle-6896.mp3" preload="auto"></audio>
     <audio id="audio-last" src="https://cdn.pixabay.com/download/audio/2022/01/09/audio_a7ef00f0ca.mp3?filename=final-of-win-super-mario-bros-zelda-106180.mp3" preload="auto"></audio>
 
+    <script>
+      // Configuración de la aplicación
+      // Este archivo contiene información sensible y NO debe subirse a GitHub
+      window.CONFIG = {
+        OPENWEATHER_API_KEY: 'ecc4063634d526dd87f49ce7f4f3ffa6'
+      };
+      
+      // Si existe config.js, lo sobrescribirá
+      if (typeof CONFIG !== 'undefined') {
+        window.CONFIG = CONFIG;
+      }
+    </script>
+    <script src="config.js" onerror="console.warn('config.js no encontrado, usando configuración por defecto')"></script>
     <script src="main.js" type="module"></script>
   </body>
 </html>

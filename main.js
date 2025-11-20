@@ -629,14 +629,29 @@ const cities = [
 ];
 
 async function fetchWeatherForCity(cityInfo) {
-  const API_KEY = 'bdab4749b50d243132e9960763012dc2';
+  // Obtener API key desde la configuración global
+  const API_KEY = (typeof window !== 'undefined' && window.CONFIG && window.CONFIG.OPENWEATHER_API_KEY) 
+    ? window.CONFIG.OPENWEATHER_API_KEY 
+    : null;
+  
+  if (!API_KEY) {
+    console.warn('API key de OpenWeatherMap no configurada. Crea un archivo config.js basado en config.example.js');
+    return {
+      success: false,
+      city: cityInfo.name,
+      temp: null,
+      icon: null
+    };
+  }
   
   try {
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityInfo.query}&appid=${API_KEY}&units=metric&lang=es`;
     const response = await fetch(url);
     
     if (!response.ok) {
-      throw new Error(`Error ${response.status}`);
+      const errorData = await response.json().catch(() => ({}));
+      console.error(`Error ${response.status} para ${cityInfo.name}:`, errorData);
+      throw new Error(`Error ${response.status}: ${errorData.message || 'Error desconocido'}`);
     }
     
     const data = await response.json();
@@ -687,6 +702,22 @@ function createWeatherWidget(weatherData) {
 async function fetchAllWeather() {
   if (!elements.weatherContainer) {
     console.error('Contenedor de clima no encontrado');
+    return;
+  }
+  
+  // Verificar que la configuración esté cargada
+  if (typeof window === 'undefined' || !window.CONFIG || !window.CONFIG.OPENWEATHER_API_KEY) {
+    console.error('API key no configurada. Verifica que config.js esté cargado correctamente.');
+    // Mostrar widgets con error
+    cities.forEach(cityInfo => {
+      const widget = createWeatherWidget({
+        success: false,
+        city: cityInfo.name,
+        temp: null,
+        icon: null
+      });
+      elements.weatherContainer.appendChild(widget);
+    });
     return;
   }
   
