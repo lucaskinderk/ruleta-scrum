@@ -38,6 +38,8 @@ const elements = {
   summaryBody: document.getElementById('summary-body'),
   chronoCard: document.getElementById('chrono-card'),
   chronoCardValue: document.getElementById('chrono-card-value'),
+  weatherContainer: document.getElementById('weather-container'),
+  lastWinnerCelebration: document.getElementById('last-winner-celebration'),
 };
 
 const context = elements.canvas.getContext('2d');
@@ -57,6 +59,11 @@ function init() {
   hideSummary();
   stopChronometer();
   updateClockDisplay();
+  
+  // Esperar un poco para asegurar que el DOM esté listo
+  setTimeout(() => {
+    fetchAllWeather();
+  }, 100);
 
   elements.addBtn.addEventListener('click', handleAddNames);
   elements.namesInput.addEventListener('keyup', event => {
@@ -230,6 +237,11 @@ function spin() {
   finalizeCurrentSpeaker();
   removeActiveSpeaker();
   stopChronometer();
+  
+  // Ocultar celebración si está visible
+  if (elements.lastWinnerCelebration) {
+    elements.lastWinnerCelebration.hidden = true;
+  }
 
   if (state.names.length === 0) {
     if (state.history.length) {
@@ -289,23 +301,62 @@ function finishSpin() {
   setActiveName(index);
   state.currentSpeaker = winner;
   startChronometer();
-  highlightWinner(winner);
+  const isLast = state.names.length === 1;
+  highlightWinner(winner, isLast);
 
-  if (state.names.length === 1) {
+  if (isLast) {
     play(elements.audioLast, 0.4);
   } else {
     play(elements.audioWin, 0.35);
   }
 }
 
-function highlightWinner(winner) {
+function highlightWinner(winner, isLast = false) {
   context.save();
-  context.fillStyle = '#ffffff';
-  context.font = 'bold 28px Ubuntu, sans-serif';
-  context.textAlign = 'center';
-  context.shadowColor = 'rgba(0,0,0,0.6)';
-  context.shadowBlur = 8;
-  context.fillText(winner, elements.canvas.width / 2, elements.canvas.height / 2 + 10);
+  const centerX = elements.canvas.width / 2;
+  const centerY = elements.canvas.height / 2;
+  
+  if (isLast) {
+    // Mostrar nombre con efecto especial dorado
+    context.fillStyle = '#FFD700';
+    context.font = 'bold 32px Ubuntu, sans-serif';
+    context.textAlign = 'center';
+    context.shadowColor = 'rgba(255, 215, 0, 0.9)';
+    context.shadowBlur = 15;
+    context.fillText(winner, centerX, centerY + 10);
+    
+    // Efecto de brillo adicional
+    context.fillStyle = '#FFFFFF';
+    context.font = 'bold 28px Ubuntu, sans-serif';
+    context.shadowColor = 'rgba(255, 255, 255, 0.6)';
+    context.shadowBlur = 8;
+    context.fillText(winner, centerX, centerY + 10);
+    
+    // Mostrar overlay de celebración con emojis
+    if (elements.lastWinnerCelebration) {
+      elements.lastWinnerCelebration.hidden = false;
+      // Ocultar después de 5 segundos
+      setTimeout(() => {
+        if (elements.lastWinnerCelebration) {
+          elements.lastWinnerCelebration.hidden = true;
+        }
+      }, 5000);
+    }
+  } else {
+    // Ocultar celebración si no es el último
+    if (elements.lastWinnerCelebration) {
+      elements.lastWinnerCelebration.hidden = true;
+    }
+    
+    // Mostrar nombre normalmente
+    context.fillStyle = '#ffffff';
+    context.font = 'bold 28px Ubuntu, sans-serif';
+    context.textAlign = 'center';
+    context.shadowColor = 'rgba(0,0,0,0.6)';
+    context.shadowBlur = 8;
+    context.fillText(winner, centerX, centerY + 10);
+  }
+  
   context.restore();
 }
 
@@ -551,6 +602,106 @@ function setActiveName(index) {
   const inRange = typeof index === 'number' && index >= 0 && index < state.names.length;
   state.activeIndex = inRange ? index : null;
   state.currentSpeaker = inRange ? state.names[index] : null;
+}
+
+function getWeatherIcon(weatherCode) {
+  const iconMap = {
+    '01d': '☀️', '01n': '🌙',
+    '02d': '⛅', '02n': '☁️',
+    '03d': '☁️', '03n': '☁️',
+    '04d': '☁️', '04n': '☁️',
+    '09d': '🌧️', '09n': '🌧️',
+    '10d': '🌦️', '10n': '🌧️',
+    '11d': '⛈️', '11n': '⛈️',
+    '13d': '❄️', '13n': '❄️',
+    '50d': '🌫️', '50n': '🌫️',
+  };
+  return iconMap[weatherCode] || '🌤️';
+}
+
+const cities = [
+  { name: 'Montevideo', query: 'Montevideo,UY' },
+  { name: 'Concepción del Uruguay', query: 'Concepcion del Uruguay,AR' },
+  { name: 'Misiones', query: 'Posadas,AR' }, // Usando Posadas como capital de Misiones
+  { name: 'Medellín', query: 'Medellin,CO' },
+  { name: 'Caracas', query: 'Caracas,VE' },
+  { name: 'Cuba', query: 'Havana,CU' } // Usando La Habana como capital de Cuba
+];
+
+async function fetchWeatherForCity(cityInfo) {
+  const API_KEY = 'bdab4749b50d243132e9960763012dc2';
+  
+  try {
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityInfo.query}&appid=${API_KEY}&units=metric&lang=es`;
+    const response = await fetch(url);
+    
+    if (!response.ok) {
+      throw new Error(`Error ${response.status}`);
+    }
+    
+    const data = await response.json();
+    return {
+      success: true,
+      city: data.name || cityInfo.name,
+      temp: Math.round(data.main.temp),
+      icon: data.weather && data.weather[0] ? data.weather[0].icon : null
+    };
+  } catch (error) {
+    console.error(`Error al obtener clima de ${cityInfo.name}:`, error);
+    return {
+      success: false,
+      city: cityInfo.name,
+      temp: null,
+      icon: null
+    };
+  }
+}
+
+function createWeatherWidget(weatherData) {
+  const widget = document.createElement('div');
+  widget.className = 'weather-widget';
+  
+  const icon = document.createElement('div');
+  icon.className = 'weather-widget__icon';
+  icon.textContent = weatherData.icon ? getWeatherIcon(weatherData.icon) : '🌤️';
+  
+  const info = document.createElement('div');
+  info.className = 'weather-widget__info';
+  
+  const temp = document.createElement('span');
+  temp.className = 'weather-widget__temp';
+  temp.textContent = weatherData.temp !== null ? `${weatherData.temp}°` : '--°';
+  
+  const desc = document.createElement('span');
+  desc.className = 'weather-widget__desc';
+  desc.textContent = weatherData.city;
+  
+  info.appendChild(temp);
+  info.appendChild(desc);
+  widget.appendChild(icon);
+  widget.appendChild(info);
+  
+  return widget;
+}
+
+async function fetchAllWeather() {
+  if (!elements.weatherContainer) {
+    console.error('Contenedor de clima no encontrado');
+    return;
+  }
+  
+  // Limpiar contenedor
+  elements.weatherContainer.innerHTML = '';
+  
+  // Obtener clima de todas las ciudades en paralelo
+  const weatherPromises = cities.map(city => fetchWeatherForCity(city));
+  const weatherResults = await Promise.all(weatherPromises);
+  
+  // Crear widgets para cada ciudad
+  weatherResults.forEach(weatherData => {
+    const widget = createWeatherWidget(weatherData);
+    elements.weatherContainer.appendChild(widget);
+  });
 }
 
 init();

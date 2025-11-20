@@ -110,6 +110,53 @@ body {
   margin-top: 1.2rem;
 }
 
+.weather-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.weather-widget {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.9rem;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.6));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 24px -12px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+}
+
+.weather-widget__icon {
+  font-size: 1.4rem;
+  line-height: 1;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.weather-widget__info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.15rem;
+}
+
+.weather-widget__temp {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1;
+}
+
+.weather-widget__desc {
+  font-size: 0.7rem;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+  text-transform: capitalize;
+}
+
 .board {
   display: grid;
   grid-template-columns: minmax(320px, 520px) minmax(260px, 360px);
@@ -122,6 +169,58 @@ body {
   display: grid;
   place-items: center;
   padding: 1.5rem;
+}
+
+.last-winner-celebration {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  pointer-events: none;
+}
+
+.celebration-emojis {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  animation: celebration-pulse 1.5s ease-in-out infinite;
+}
+
+.celebration-emoji {
+  font-size: 2.5rem;
+  display: inline-block;
+  animation: celebration-bounce 1s ease-in-out infinite;
+  filter: drop-shadow(0 4px 8px rgba(255, 215, 0, 0.6));
+}
+
+.celebration-emoji:nth-child(1) { animation-delay: 0s; }
+.celebration-emoji:nth-child(2) { animation-delay: 0.1s; }
+.celebration-emoji:nth-child(3) { animation-delay: 0.2s; }
+.celebration-emoji:nth-child(4) { animation-delay: 0.3s; }
+.celebration-emoji:nth-child(5) { animation-delay: 0.4s; }
+.celebration-emoji:nth-child(6) { animation-delay: 0.5s; }
+
+@keyframes celebration-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.9;
+  }
+}
+
+@keyframes celebration-bounce {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-15px) rotate(10deg);
+  }
 }
 
 #wheel {

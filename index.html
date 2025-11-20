@@ -16,6 +16,7 @@
           <h1>Ruleta Scrum</h1>
           <p>Backend Team by Scanntech</p>
           <p class="panel__time">Hora actual: <span id="clock-display">--:--</span></p>
+          <div id="weather-container" class="weather-container"></div>
         </header>
 
         <div class="board">
@@ -25,6 +26,14 @@
               <div id="chrono" class="time time--chrono"></div>
             </div>
             <canvas id="wheel" width="520" height="520"></canvas>
+            <div id="last-winner-celebration" class="last-winner-celebration" hidden>
+              <div class="celebration-emojis">
+                <span class="celebration-emoji">🎉</span>
+                <span class="celebration-emoji">🍀</span>
+                <span class="celebration-emoji">🌟</span>
+                <span class="celebration-emoji">💫</span>
+              </div>
+            </div>
             <button id="spin" class="btn btn--spin" type="button" aria-label="Girar ruleta">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                 <path
