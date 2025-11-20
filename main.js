@@ -707,17 +707,9 @@ async function fetchAllWeather() {
   
   // Verificar que la configuración esté cargada
   if (typeof window === 'undefined' || !window.CONFIG || !window.CONFIG.OPENWEATHER_API_KEY) {
-    console.error('API key no configurada. Verifica que config.js esté cargado correctamente.');
-    // Mostrar widgets con error
-    cities.forEach(cityInfo => {
-      const widget = createWeatherWidget({
-        success: false,
-        city: cityInfo.name,
-        temp: null,
-        icon: null
-      });
-      elements.weatherContainer.appendChild(widget);
-    });
+    console.warn('API key no configurada. Los widgets de clima no se mostrarán.');
+    console.warn('Para usar los widgets de clima, crea un archivo config.js con tu API key de OpenWeatherMap.');
+    // No mostrar widgets si no hay API key
     return;
   }
   
