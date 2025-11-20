@@ -1,5 +1,6 @@
 const defaultNames = ['Diego', 'Emiliano', 'Juan', 'Lautaro', 'Yassel', 'Lucas', 'Nathalia', 
-  'Ernesto', 'Yordanis', 'Renzo', 'Valerie', 'Yandy', 'Yinett', 'Alejandro', 'Rodrigo'];
+  'Ernesto', 'Yordanis', 'Renzo', 'Valerie', 'Yandy', 'Yinett', 'Alejandro', 'Rodrigo', 'Alegria', 'Alexander', 
+  'Belen','Valerie'];
 const maxNames = 60;
 
 const state = {
@@ -41,9 +42,13 @@ const elements = {
 
 const context = elements.canvas.getContext('2d');
 const radius = elements.canvas.width / 2 - 20;
-const textRadius = radius - 70;
+const textRadius = radius - 45;
 
 const paletteOffset = Math.random() * 360;
+
+function randomBetween(min, max) {
+  return Math.random() * (max - min) + min;
+}
 
 function init() {
   createStars();
@@ -62,7 +67,7 @@ function init() {
   elements.clearBtn.addEventListener('click', clearNames);
   elements.spinBtn.addEventListener('click', spin);
   window.addEventListener('keydown', event => {
-    if (event.code === 'Space') {
+    if (event.code === 'KeyG') {
       event.preventDefault();
       spin();
     }
@@ -81,12 +86,11 @@ function handleAddNames() {
 
   const candidates = raw
     .split(/[;,]/)
-    .map(name => name.trim().toUpperCase())
+    .map(name => name.trim())
     .filter(Boolean);
 
   let added = 0;
   for (const candidate of candidates) {
-    if (state.names.includes(candidate)) continue;
     if (state.names.length >= maxNames) {
       setAlert('Ya agregaste demasiados nombres.');
       break;
@@ -288,9 +292,9 @@ function finishSpin() {
   highlightWinner(winner);
 
   if (state.names.length === 1) {
-    play(elements.audioLast, 0.3);
+    play(elements.audioLast, 0.4);
   } else {
-    play(elements.audioWin, 0.2);
+    play(elements.audioWin, 0.35);
   }
 }
 
@@ -523,12 +527,18 @@ function createStars() {
   for (let i = 0; i < total; i += 1) {
     const star = document.createElement('span');
     star.className = 'star';
-    const size = Math.random() * 2 + 1;
+    const size = randomBetween(3.5, 7.2);
     star.style.width = `${size}px`;
     star.style.height = `${size}px`;
     star.style.left = `${Math.random() * 100}%`;
     star.style.top = `${Math.random() * 100}%`;
     star.style.opacity = (Math.random() * 0.4 + 0.4).toFixed(2);
+    star.style.setProperty('--star-opacity', star.style.opacity);
+    star.style.setProperty('--star-scale', randomBetween(0.8, 1.3).toFixed(2));
+    star.style.setProperty('--star-duration', `${randomBetween(12, 65).toFixed(1)}s`);
+    star.style.setProperty('--star-shift-x', `${randomBetween(-80, 80).toFixed(1)}px`);
+    star.style.setProperty('--star-shift-y', `${randomBetween(60, 180).toFixed(1)}px`);
+    star.style.animationDelay = `${randomBetween(-20, 0).toFixed(1)}s`;
     starsContainer.appendChild(star);
   }
 }
