@@ -1,5 +1,5 @@
 const defaultNames = ['Diego', 'Emiliano', 'Juan', 'Lautaro', 'Yassel', 'Lucas', 'Nathalia', 
-  'Ernesto', 'Yordanis', 'Renzo', 'Valerie', 'Yandy', 'Yinett', 'Alejandro', 'Rodrigo', 'Alegria', 'Alexander', 
+  'Ernesto', 'Yordanis', 'Renzo', 'Valerie', 'Yandy', 'Alejandro', 'Rodrigo', 'Alegria', 'Alexander', 
   'Belen','Valerie'];
 const maxNames = 60;
 
@@ -728,4 +728,5 @@ async function fetchAllWeather() {
 }
 
 init();
+
 
