@@ -1,6 +1,6 @@
 const defaultNames = ['Diego', 'Emiliano', 'Juan', 'Lautaro', 'Yassel', 'Lucas', 'Nathalia', 
   'Ernesto', 'Yordanis', 'Renzo', 'Valerie', 'Yandy', 'Alejandro', 'Rodrigo', 'Alegria', 'Alexander', 
-  'Belen','Valerie'];
+  'Belen','Valerie','Yosviel','Carlos','Adamaris'];
 const maxNames = 60;
 
 const state = {
@@ -74,7 +74,7 @@ function init() {
   elements.clearBtn.addEventListener('click', clearNames);
   elements.spinBtn.addEventListener('click', spin);
   window.addEventListener('keydown', event => {
-    if (event.code === 'KeyG') {
+    if (event.code === 'Key*') {
       event.preventDefault();
       spin();
     }
@@ -728,5 +728,6 @@ async function fetchAllWeather() {
 }
 
 init();
+
 
 
