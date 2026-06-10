@@ -1,6 +1,5 @@
-const defaultNames = ['Diego', 'Emiliano', 'Juan', 'Lautaro', 'Yassel', 'Lucas', 'Nathalia', 
-  'Ernesto', 'Yordanis', 'Renzo', 'Valerie', 'Yandy', 'Alejandro', 'Rodrigo', 'Alegria', 'Alexander', 
-  'Belen','Valerie','Yosviel','Carlos','Adamaris'];
+const defaultNames = ['Silvina', 'Lucas', 'Andy', 'Facu', 'Joaquín', 'Manuel', 'Nico', 
+  'Neysis', 'Rodrigo', 'Mariana'];
 const maxNames = 60;
 
 const state = {
