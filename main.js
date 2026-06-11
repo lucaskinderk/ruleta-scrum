@@ -621,10 +621,10 @@ function getWeatherIcon(weatherCode) {
 const cities = [
   { name: 'Montevideo', query: 'Montevideo,UY' },
   { name: 'Concepción del Uruguay', query: 'Concepcion del Uruguay,AR' },
-  { name: 'Misiones', query: 'Posadas,AR' }, // Usando Posadas como capital de Misiones
-  { name: 'Medellín', query: 'Medellin,CO' },
+  { name: 'Salto', query: 'Salto,UY' }, 
+  { name: 'Lima', query: 'Lima,PE' },
   { name: 'Caracas', query: 'Caracas,VE' },
-  { name: 'Cuba', query: 'Havana,CU' } // Usando La Habana como capital de Cuba
+  { name: 'Cuba', query: 'Havana,CU' } 
 ];
 
 async function fetchWeatherForCity(cityInfo) {
