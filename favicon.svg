@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Fondo circular -->
+  <circle cx="50" cy="50" r="50" fill="#0b0d11"/>
+  
+  <!-- Rueda de colores -->
+  <g transform="translate(50, 50)">
+    <!-- Segmentos de la rueda -->
+    <circle cx="0" cy="-25" r="8" fill="#FF6B6B"/>
+    <circle cx="21.65" cy="-12.5" r="8" fill="#4ECDC4"/>
+    <circle cx="21.65" cy="12.5" r="8" fill="#45B7D1"/>
+    <circle cx="0" cy="25" r="8" fill="#FFA07A"/>
+    <circle cx="-21.65" cy="12.5" r="8" fill="#98D8C8"/>
+    <circle cx="-21.65" cy="-12.5" r="8" fill="#F7DC6F"/>
+    
+    <!-- Centro con brillo -->
+    <circle cx="0" cy="0" r="6" fill="#FFFFFF" opacity="0.9"/>
+    <circle cx="0" cy="0" r="4" fill="#FFD700"/>
+  </g>
+  
+  <!-- Puntero en la parte superior -->
+  <polygon points="50,8 45,18 55,18" fill="#FFD700"/>
+</svg>
