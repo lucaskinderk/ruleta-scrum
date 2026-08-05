@@ -1,4 +1,4 @@
-const defaultNames = ['Silvina', 'Lucas', 'Andy', 'Facu', 'Joaquín', 'Manuel', 'Nico', 
+const defaultNames = ['Silvina', 'Lucas', 'Andy', 'Facu', 'Joaquín', 'Yandy','Manuel', 'Nico', 
   'Neysis', 'Rodrigo', 'Mariana'];
 const maxNames = 60;
 
