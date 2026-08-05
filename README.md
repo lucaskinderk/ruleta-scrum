@@ -72,5 +72,5 @@ Resumen rápido:
 
 **Lucas Kinderknech**
 
-Desarrollado para Backend Team by Scanntech
+Desarrollado desde Argentina
 
